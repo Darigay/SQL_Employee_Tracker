@@ -2,7 +2,7 @@ const mysql = require("mysql");
 const inquirer = require("inquirer");
 
 const db = require("./db/connection");
-require("console.table");
+const consoletable = require("console.table");
 
 function optionPrompt() {
 
@@ -43,7 +43,7 @@ function optionPrompt() {
                     break;
                 case 'Add a role': addRole();
                     break;
-                case 'Add a Employee': addEmp();
+                case 'Add an employee': addEmp();
                     break;
                 case 'Update an employee role': updateEmpRole();
                     break;
@@ -74,25 +74,64 @@ function viewAllDept() {
 }
 
 // function to View all Roles
-function viewAllRoles(){
+function viewAllRoles() {
     db.query(`select * from role`,
-    function (err, results) {
-        console.log("List of Roles:");
-        console.table(results);
-        optionPrompt();
-    })
+        function (err, results) {
+            console.log("List of Roles:");
+            console.table(results);
+            optionPrompt();
+        })
 }
 
 //function to View all Employees
-function viewAllEmps(){
+function viewAllEmps() {
     db.query(`select * from employee`,
-    function (err, results) {
-        console.log("List of Employees:");
-        console.table(results);
-        optionPrompt();
-    })
+        function (err, results) {
+            console.log("List of Employees:");
+            console.table(results);
+            optionPrompt();
+        })
 }
 
+//function to View Employees by Manager
+ function viewEmpByMan(){
+ inquirer.prompt(
+    {
+        type: "input",
+        name: "managerId",
+        message: " Manager ID:"
+    }
+    )
+
+ .then(mname => {
+            db.query(`SELECT * FROM employee WHERE manager_id = ?`, mname.managerId,
+                function (err, results) {
+                    console.log("Employee Names Display successful:");
+                    console.table(results);
+                    optionPrompt();
+                })
+        })
+ }
+
+ //function to View Employees by Department
+ function viewEmpByDept(){
+ inquirer.prompt(
+    {
+        type: "input",
+        name: "departmentId",
+        message: " Department ID:"
+    }
+    )
+
+ .then(dname => {
+            db.query(`SELECT * FROM employee INNER JOIN role ON employee.role_id = role.id WHERE role.department_id = ?`, dname.departmentId,
+                function (err, results) {
+                    console.log("Employee Names Display successful:");
+                    console.table(results);
+                    optionPrompt();
+                })
+       })
+ }
 
 // Function to add a Department
 function addDept() {
@@ -109,41 +148,76 @@ function addDept() {
                     console.log("Departent Added successfully:");
                     viewAllDept();
                 })
-
         })
 }
 
-// function addRole() {
-//     inquirer.prompt(
-//         [{
-//             type: "input",
-//             name: "roleName",
-//             message: " New Role:"
-//         },
-//         {
-//             type: "input",
-//             name: "salary",
-//             message: " Salary:"
-//         },
-//         {
-//             type: "input",
-//             name: "deptId",
-//             message: " Department Id:"
-//         }])
+//Function to add a Role
+function addRole() {
+    inquirer.prompt(
+        [{
+            type: "input",
+            name: "roleName",
+            message: " New Role:"
+        },
+        {
+            type: "input",
+            name: "salary",
+            message: " Salary:"
+        },
+        {
+            type: "input",
+            name: "deptId",
+            message: " Department Id:"
+        }])
 
-//         .then(rname => {
-//             db.query(`INSERT INTO role (title, salary, department_id) VALUES (?,?,?)`, rname.roleName, rname.salary, rname.deptId,
-//                 function (err, results) {
-//                     console.log("Role Added successfully:");
+        .then(rname => {
+            const sql = `INSERT INTO role (title, salary, department_id) VALUES (?,?,?)`;
+            const params = [rname.roleName, rname.salary, rname.deptId];
+            db.query(sql, params, (err, result) => {
+                if (err) {
+                    console.log(err);
+                }
+                console.log("Role Added successfully:");
+                viewAllRoles();
+            })
+        })
+}
 
-//                 })
+// Function to add a Employee
+function addEmp() {
+    inquirer.prompt(
+        [{
+            type: "input",
+            name: "firstName",
+            message: " First Name:"
+        },
+        {
+            type: "input",
+            name: "lastName",
+            message: " Last Name:"
+        },
+        {
+            type: "input",
+            name: "roleId",
+            message: " Role ID:"
+        },
+        {
+            type: "input",
+            name: "managerId",
+            message: " Manager Id:"
+        }])
 
-//         })
-
-//         .catch(err => {
-//             console.log(err);
-//         })
-
-// }
+        .then(ename => {
+            const esql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)`;
+            const eparams = [ename.firstName, ename.lastName, ename.roleId, ename.managerId];
+            db.query(esql, eparams, (err, result) => {
+                if (err) {
+                    console.log(err);
+                }
+                console.log("Employee Added successfully:");
+                viewAllEmps();
+            })
+        })
+}
 
 optionPrompt();
