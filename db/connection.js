@@ -5,8 +5,16 @@ const db = mysql.createConnection({
   // Your MySQL username,
   user: 'root',
   // Your MySQL password
-  password: '',
-  database: 'db'
+  password: 'divyasql',
+  database: 'employees_db'
 });
+
+db.connect(
+   function(err) {
+        if(err)
+            throw(err);
+        
+     }
+)
 
 module.exports = db;

@@ -16,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/Darigay/SQL_Employee_Tracker/issues"
   },
-  "homepage": "https://github.com/Darigay/SQL_Employee_Tracker#readme"
+  "homepage": "https://github.com/Darigay/SQL_Employee_Tracker#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "inquirer": "^8.2.1",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3"
+  }
 }
