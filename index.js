@@ -24,8 +24,8 @@ function optionPrompt() {
                 "Update an employee manager",
                 "Delete Employees",
                 "Delete Roles",
-                "Delete Department",
-                "End"]
+                "Delete Department"
+                ]
         })
         .then(userPick => {
             switch (userPick.task) {
@@ -47,7 +47,7 @@ function optionPrompt() {
                     break;
                 case 'Update an employee role': updateEmpRole();
                     break;
-                case 'Update an employee Manager': updateEmpMgr();
+                case 'Update an employee manager': updateEmpMgr();
                     break;
                 case 'Delete Employees': deleteEmp();
                     break;
@@ -55,9 +55,7 @@ function optionPrompt() {
                     break;
                 case 'Delete Department': deleteDept();
                     break;
-
-                default: End();
-
+                
             }
         })
 
@@ -217,6 +215,115 @@ function addEmp() {
                 console.log("Employee Added successfully:");
                 viewAllEmps();
             })
+        })
+}
+
+
+// Function to update an Employee Role
+function updateEmpRole() {
+    inquirer.prompt(
+        [{
+            type: "input",
+            name: "employeeId",
+            message: " Employee ID:"
+        },
+        {
+            type: "input",
+            name: "newRoleId",
+            message: " New Role ID:"
+        }])
+
+        .then(ername => {
+            const ersql = `UPDATE employee SET role_id =` + ername.newRoleId + ` WHERE employee.id = ` + ername.employeeId ;
+             
+            db.query(ersql, (err, result) => {
+                if (err) {
+                    console.log(err);
+                }
+                console.log("Employee Role updated successfully:");
+                viewAllEmps();
+            })
+        })
+}
+
+// Function to update Manager
+function updateEmpMgr() {
+    inquirer.prompt(
+        [{
+            type: "input",
+            name: "employeeId",
+            message: " Employee ID:"
+        },
+        {
+            type: "input",
+            name: "newManagerId",
+            message: " New Manager ID:"
+        }])
+
+        .then(emname => {
+            const emsql = `UPDATE employee SET manager_id =` + emname.newManagerId + ` WHERE employee.id = ` + emname.employeeId ;
+             
+            db.query(emsql, (err, result) => {
+                if (err) {
+                    console.log(err);
+                }
+                console.log("Employee Role updated successfully:");
+                viewAllEmps();
+            })
+        })
+}
+
+// Function to delete an Employee
+function deleteEmp() {
+    inquirer.prompt(
+        {
+            type: "input",
+            name: "empID",
+            message: " Employee ID:"
+        }
+    )
+        .then(dename => {
+            db.query(`DELETE FROM employee WHERE employee.id = ` + dename.empID,
+                function (err, results) {
+                    console.log("Employee Deleted successfully:");
+                    viewAllEmps();
+                })
+        })
+}
+
+// Function to delete a Role
+function deleteRole() {
+    inquirer.prompt(
+        {
+            type: "input",
+            name: "roleID",
+            message: " Role ID:"
+        }
+    )
+        .then(drname => {
+            db.query(`DELETE FROM role WHERE role.id = ` + drname.roleID,
+                function (err, results) {
+                    console.log("Role Deleted successfully:");
+                    viewAllRoles();
+                })
+        })
+}
+
+// Function to delete a Department
+function deleteDept() {
+    inquirer.prompt(
+        {
+            type: "input",
+            name: "deptID",
+            message: " Department ID:"
+        }
+    )
+        .then(ddname => {
+            db.query(`DELETE FROM department WHERE department.id = ` + ddname.deptID,
+                function (err, results) {
+                    console.log("Department Deleted successfully:");
+                    viewAllDept();
+                })
         })
 }
 
