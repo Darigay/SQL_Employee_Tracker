@@ -23,7 +23,7 @@ function optionPrompt() {
                 "Update an employee role",
                 "Update an employee manager",
                 "Delete Employees",
-                "Delete Roles",
+                "Delete a Role",
                 "Delete Department"
                 ]
         })
@@ -51,7 +51,7 @@ function optionPrompt() {
                     break;
                 case 'Delete Employees': deleteEmp();
                     break;
-                case 'Delete Roles': deleteRole();
+                case 'Delete a Role': deleteRole();
                     break;
                 case 'Delete Department': deleteDept();
                     break;
