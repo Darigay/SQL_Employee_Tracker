@@ -51,6 +51,14 @@ WHEN the user chooses to delete an department, the the user is prompted to selec
 - mysql2
 
 ## Screenshots
+![SQL1](https://user-images.githubusercontent.com/94805706/158314770-749cf0ff-3224-4ae6-8017-dc8a7005202a.png)
+
+![SQL2](https://user-images.githubusercontent.com/94805706/158314778-a81f2b43-1344-4232-b747-7f00a182bf7d.png)
+
+![SQL3](https://user-images.githubusercontent.com/94805706/158314786-c98e74b3-e4e7-4f5f-8bb9-0d891f12a9b8.png)
+![SQL4](https://user-images.githubusercontent.com/94805706/158314794-46008ebb-97e1-4903-a1f3-416d843987c7.png)
+
+![SQL5](https://user-images.githubusercontent.com/94805706/158314801-cfc7065d-258f-44a4-b9d0-a76c9e46fd86.png)
 
 
 ## Resources
