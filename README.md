@@ -35,6 +35,9 @@ WHEN the user chooses to delete an role , the the user is prompted to select an 
 WHEN the user chooses to delete an department, the the user is prompted to select an employee id and this employee is deleted in the database.
 
 
+## WalkThrough video of the Application
+https://user-images.githubusercontent.com/94805706/158734179-f6351ec0-a0ce-4e56-9243-3a36f3b904b8.mp4
+
 ## Technologies
 - Javascript
 - Node.Js
